@@ -68,6 +68,7 @@
 	aviso2 BYTE "AVISO: Para el siguiente periodo fiscal, la empresa puede continuar como 'pequenio contribuyente'.",0Ah, 0			; Aviso 2 para el monto anual
 	formato_datos_empresa BYTE "||%-15s||%-10d||%-10d||", 0Ah, 0     																; Formato para imprimir los meses montos e isr
 	mencion BYTE "LOS DATOS GENERALES SON:",0Ah,0																					; Cadena para mostrar datos generales
+	identificacion_datos BYTE "||      MES      ||MONTOS    ||ISR       ||", 0Ah, 0									; Cadena a mostrar para identificar los datos mes, montos e isr
 ;==========
 ;|| CODE ||
 ;==========
@@ -117,7 +118,8 @@ main    proc
 	
 	;|| DATOS MES,MONTO,ISR ||
     INVOKE printf, ADDR mencion
-    mov esi, 0  															; Inicializar índice de factura en 0
+    INVOKE printf, ADDR identificacion_datos
+	mov esi, 0  															; Inicializar índice de factura en 0
 
     imprimir_montos_meses:
 		mov eax, [meses + esi*4]                                          ; Cargar la dirección del mes actual en eax
